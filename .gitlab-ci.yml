@@ -16,6 +16,7 @@ bala-push:
   stage: ecrpush
   tags:
   - java
+  image:
     name: gcr.io/kaniko-project/executor:debug
     entrypoint: [""]
   script:
