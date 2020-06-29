@@ -1,0 +1,29 @@
+# refer https://subscription.packtpub.com/book/cloud_and_networking/9781789531282/3/ch03lvl1sec15/installing-gitlab-using-omnibus-packages
+
+## gitlab enterprise edition installation
+sudo apt-get install -y curl openssh-server ca-certificates 
+sudo apt-get install -y postfix  # optional
+curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ee/script.deb.sh | sudo bash 
+sudo EXTERNAL_URL="http://gitlab.example.com" apt-get install gitlab-ee  ## replace with instance public ip
+Note: It will install gitlab 13.1 + version
+
+## gitlab community edtion installation
+sudo apt-get install -y curl openssh-server ca-certificates 
+sudo apt-get install -y postfix  # optional
+curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.deb.sh | sudo bash 
+sudo EXTERNAL_URL="http://gitlab.example.com" apt-get install gitlab-ce 
+
+
+## gitlab-runner instllation
+## runner installation reference link --https://subscription.packtpub.com/book/cloud_and_networking/9781789531282/19/ch19lvl1sec33/creating-a-basic-runner-with-the-shell-executor
+curl -o script.deb.sh https://packages.gitlab.com/install/repositories/runner/gitlab-runner/script.deb.sh
+chmod +x script.deb.sh
+./script.deb.sh
+apt-get install gitlab-runner -y
+
+## register gitlab runner to gitlab
+sudo gitlab-runner register
+# push docker image to ECR by follow the below link
+https://medium.com/@s4l1h/building-and-publishing-a-container-image-with-gitlab-ci-and-kaniko-889e854fb7f1
+
+

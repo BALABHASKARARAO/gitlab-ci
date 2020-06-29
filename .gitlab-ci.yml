@@ -1,0 +1,24 @@
+image: maven:3.3.9-jdk-8
+
+stages:
+  - build
+  - ecrpush
+
+
+build:
+  stage: build
+  tags:
+  - java
+  script:
+    - mvn clean package
+    
+bala-push:
+  stage: ecrpush
+  tags:
+  - java
+    name: gcr.io/kaniko-project/executor:debug
+    entrypoint: [""]
+  script:
+    - echo "{\"credsStore\":\"ecr-login\",\"credHelpers\":{\"$AWS_ACCOUNT_ID.dkr.ecr.$region.amazonaws.com\":\"ecr-login\"}}" > /kaniko/.docker/config.json
+    - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination $AWS_REPOSITORY:$CI_COMMIT_TAG
+
